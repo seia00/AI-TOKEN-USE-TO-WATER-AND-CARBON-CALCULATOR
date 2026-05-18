@@ -1,4 +1,111 @@
 @import "tailwindcss";
 
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; background: #020108; }
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── Level transition flash ── */
+@keyframes levelFlash {
+  0%   { opacity: 0; background: #000; }
+  18%  { opacity: 1; background: #000; }
+  55%  { opacity: 0.95; background: #000; }
+  100% { opacity: 0; background: #000; }
+}
+.level-flash {
+  animation: levelFlash 0.9s ease-out forwards;
+}
+
+/* ── Landing rumble ── */
+@keyframes rumble {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  12%  { transform: translate(-7px, 2px) rotate(-0.4deg); }
+  25%  { transform: translate(7px, -2px) rotate(0.4deg); }
+  37%  { transform: translate(-5px, 1px) rotate(-0.25deg); }
+  50%  { transform: translate(4px, -1px) rotate(0.2deg); }
+  62%  { transform: translate(-3px, 0) rotate(-0.1deg); }
+  75%  { transform: translate(2px, 0) rotate(0.1deg); }
+  87%  { transform: translate(-1px, 0); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+.rumble {
+  animation: rumble 0.45s ease-out forwards;
+}
+
+/* ── Floating decorative elements ── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes floatY2 {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+.float-1 { animation: floatY  4s ease-in-out infinite; }
+.float-2 { animation: floatY2 5.5s ease-in-out infinite 0.8s; }
+.float-3 { animation: floatY  3.8s ease-in-out infinite 2s; }
+
+/* ── Pixel scanlines overlay ── */
+@keyframes scanlines {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 4px; }
+}
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  z-index: 50;
+}
+
+/* ── Custom range slider ── */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  outline: none;
+  border: 2px solid rgba(255,255,255,0.25);
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 3px solid #000;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.6);
+  cursor: pointer;
+  border-radius: 0;
+}
+input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 3px solid #000;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.6);
+  cursor: pointer;
+  border-radius: 0;
+}
+
+/* ── Pixel number input ── */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+input[type='number'] { -moz-appearance: textfield; }
+
+/* ── Selection colour ── */
+::selection { background: #8b5cf6; color: #fff; }
